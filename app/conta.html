@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>Balaroti - Minha Conta</title></head>
+<body>
+  <h1>Balaroti</h1>
+  <h2 data-cy="perfil-titulo">Meus pedidos</h2>
+  <p>Usuário: <span id="user" data-cy="perfil-email"></span></p>
+  <ul>
+    <li data-cy="pedido-item">Pedido #1001 - Caixa de parafusos - Entregue</li>
+    <li data-cy="pedido-item">Pedido #1002 - Caixa de pregos - Em transporte</li>
+  </ul>
+
+  <h2>Meus dados</h2>
+  <input id="nome" data-cy="dados-nome" type="text" placeholder="Nome">
+  <p id="erro-nome" data-cy="dados-erro-nome" hidden></p>
+  <input id="telefone" data-cy="dados-telefone" type="text" placeholder="Telefone">
+  <p id="erro-telefone" data-cy="dados-erro-telefone" hidden></p>
+  <button id="salvar" data-cy="dados-salvar">Salvar</button>
+  <p id="sucesso" data-cy="dados-sucesso" hidden>Dados salvos com sucesso</p>
+  <script>
+    if (!sessionStorage.getItem("logado")) { location.href = "index.html"; }
+    document.getElementById("user").textContent = sessionStorage.getItem("logado");
+    document.getElementById("salvar").onclick = function () {
+      var nome = document.getElementById("nome").value.trim();
+      var tel = document.getElementById("telefone").value.trim();
+      var eN = document.getElementById("erro-nome");
+      var eT = document.getElementById("erro-telefone");
+      var ok = document.getElementById("sucesso");
+      eN.hidden = eT.hidden = ok.hidden = true;
+      var valido = true;
+      if (!nome || /\d/.test(nome)) {
+        eN.textContent = "Nome deve conter apenas letras";
+        eN.hidden = false; valido = false;
+      }
+      if (!tel) {
+        eT.textContent = "Telefone é obrigatório";
+        eT.hidden = false; valido = false;
+      }
+      if (valido) { ok.hidden = false; }
+    };
+  </script>
+</body>
+</html>
