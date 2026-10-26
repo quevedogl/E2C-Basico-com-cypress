@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>Balaroti - Carrinho</title></head>
+<body>
+  <h1>Balaroti</h1>
+  <h2>Carrinho</h2>
+  <p>Caixa de parafusos (estoque: <span id="estoque" data-cy="carrinho-estoque">...</span>)</p>
+  <input id="qtd" data-cy="carrinho-quantidade" type="number" min="1" value="1">
+  <p id="aviso" data-cy="carrinho-aviso" hidden></p>
+  <input id="cep" data-cy="carrinho-cep" type="text" placeholder="CEP">
+  <p id="cep-erro" data-cy="carrinho-cep-erro" hidden></p>
+  <button id="fin" data-cy="carrinho-finalizar">Finalizar compra</button>
+  <p id="ok" data-cy="carrinho-sucesso" hidden>Compra finalizada com sucesso</p>
+  <script>
+    var ESTOQUE = null;
+    fetch("api/estoque.json")
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        ESTOQUE = d.estoque;
+        document.getElementById("estoque").textContent = ESTOQUE;
+      });
+    var qtd = document.getElementById("qtd");
+    var aviso = document.getElementById("aviso");
+    qtd.oninput = function () {
+      var v = parseInt(qtd.value, 10);
+      if (ESTOQUE !== null && v > ESTOQUE) {
+        qtd.value = ESTOQUE;
+        aviso.textContent = "Quantidade máxima em estoque: " + ESTOQUE;
+        aviso.hidden = false;
+      }
+    };
+    document.getElementById("fin").onclick = function () {
+      var erro = document.getElementById("cep-erro");
+      var ok = document.getElementById("ok");
+      erro.hidden = ok.hidden = true;
+      if (!/^\d{8}$/.test(document.getElementById("cep").value)) {
+        erro.textContent = "CEP deve conter apenas números (8 dígitos)";
+        erro.hidden = false;
+      } else {
+        ok.hidden = false;
+      }
+    };
+  </script>
+</body>
+</html>

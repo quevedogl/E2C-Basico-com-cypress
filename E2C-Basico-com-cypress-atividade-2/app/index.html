@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>Balaroti - Login</title></head>
+<body>
+  <h1>Balaroti</h1>
+  <h2>Login</h2>
+  <input id="email" data-cy="login-email" type="email" placeholder="E-mail">
+  <input id="senha" data-cy="login-senha" type="password" placeholder="Senha">
+  <button id="entrar" data-cy="login-entrar">Entrar</button>
+  <p id="erro" data-cy="login-erro" hidden></p>
+  <p><a href="carrinho.html" data-cy="link-carrinho">Ir para o carrinho</a></p>
+  <script>
+    document.getElementById("entrar").onclick = function () {
+      var e = document.getElementById("email").value;
+      var s = document.getElementById("senha").value;
+      if (e === "usuario@teste.com" && s === "teste123") {
+        sessionStorage.setItem("logado", e);
+        location.href = "conta.html";
+      } else {
+        var p = document.getElementById("erro");
+        p.textContent = "E-mail ou senha incorretos";
+        p.hidden = false;
+      }
+    };
+  </script>
+</body>
+</html>

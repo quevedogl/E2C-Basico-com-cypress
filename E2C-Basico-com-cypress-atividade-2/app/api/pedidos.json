@@ -1,0 +1,6 @@
+{
+  "pedidos": [
+    { "id": 1001, "descricao": "Caixa de parafusos", "status": "Entregue" },
+    { "id": 1002, "descricao": "Caixa de pregos", "status": "Em transporte" }
+  ]
+}

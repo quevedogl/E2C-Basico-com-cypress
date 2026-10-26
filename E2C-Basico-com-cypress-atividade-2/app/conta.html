@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>Balaroti - Minha Conta</title></head>
+<body>
+  <h1>Balaroti</h1>
+  <h2 data-cy="perfil-titulo">Meus pedidos</h2>
+  <p>Usuário: <span id="user" data-cy="perfil-email"></span></p>
+  <ul id="pedidos" data-cy="pedidos-lista"></ul>
+  <p id="pedidos-erro" data-cy="pedidos-erro" hidden></p>
+
+  <h2>Meus dados</h2>
+  <input id="nome" data-cy="dados-nome" type="text" placeholder="Nome">
+  <p id="erro-nome" data-cy="dados-erro-nome" hidden></p>
+  <input id="telefone" data-cy="dados-telefone" type="text" placeholder="Telefone">
+  <p id="erro-telefone" data-cy="dados-erro-telefone" hidden></p>
+  <button id="salvar" data-cy="dados-salvar">Salvar</button>
+  <p id="sucesso" data-cy="dados-sucesso" hidden>Dados salvos com sucesso</p>
+  <script>
+    if (!sessionStorage.getItem("logado")) { location.href = "index.html"; }
+    document.getElementById("user").textContent = sessionStorage.getItem("logado");
+    fetch("api/pedidos.json")
+      .then(function (r) {
+        if (!r.ok) { throw new Error("HTTP " + r.status); }
+        return r.json();
+      })
+      .then(function (dados) {
+        var ul = document.getElementById("pedidos");
+        dados.pedidos.forEach(function (p) {
+          var li = document.createElement("li");
+          li.setAttribute("data-cy", "pedido-item");
+          li.textContent = "Pedido #" + p.id + " - " + p.descricao + " - " + p.status;
+          ul.appendChild(li);
+        });
+      })
+      .catch(function () {
+        var e = document.getElementById("pedidos-erro");
+        e.textContent = "Não foi possível carregar os pedidos";
+        e.hidden = false;
+      });
+    document.getElementById("salvar").onclick = function () {
+      var nome = document.getElementById("nome").value.trim();
+      var tel = document.getElementById("telefone").value.trim();
+      var eN = document.getElementById("erro-nome");
+      var eT = document.getElementById("erro-telefone");
+      var ok = document.getElementById("sucesso");
+      eN.hidden = eT.hidden = ok.hidden = true;
+      var valido = true;
+      if (!nome || /\d/.test(nome)) {
+        eN.textContent = "Nome deve conter apenas letras";
+        eN.hidden = false; valido = false;
+      }
+      if (!tel) {
+        eT.textContent = "Telefone é obrigatório";
+        eT.hidden = false; valido = false;
+      }
+      if (valido) { ok.hidden = false; }
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+ATIVIDADE 2 — COMO ENVIAR PARA O GITHUB
+
+Este ZIP contém a suíte A1 correta (E2C-Basico-com-cypress) já refatorada conforme os patches da atividade.
+
+IMPORTANTE: para enviar para o repositório certo e manter o histórico que já existe, NÃO faça git init nesta pasta extraída.
+
+1) Clone o repositório correto do GitHub, ou abra no VS Code a pasta local que já é o clone dele.
+2) Copie o conteúdo desta pasta para dentro da pasta clonada, substituindo os arquivos correspondentes.
+3) No terminal do VS Code, confirme o destino:
+   git remote -v
+   O endereço exibido deve ser o repositório E2C-Basico-com-cypress correto.
+4) Instale dependências e teste:
+   npm install
+   npm run test:3x
+5) Revise REFATORACAO.md e preencha a tabela de evidência apenas com os resultados reais do teste.
+6) Faça commits pequenos por grupo de alterações (Page Objects, comandos, fixtures/stubs e documentação). Evite um único git add/commit de tudo se o professor exige commits pequenos.
+7) Crie a tag solicitada somente depois dos testes:
+   git tag atividade-2
+   git push origin main
+   git push origin atividade-2
+
+Se o repositório remoto já tiver uma tag atividade-2, não a recrie sem antes verificar com: git tag -l atividade-2
+
+O pacote não inclui .git nem node_modules. Não foi possível confirmar a execução dos testes neste ambiente; rode npm run test:3x no seu computador e só registre evidências se as três execuções passarem.

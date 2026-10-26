@@ -1,0 +1,8 @@
+{
+  "tituloPedidos": "Meus pedidos",
+  "loginInvalido": "incorretos",
+  "nomeInvalido": "apenas letras",
+  "telefoneObrigatorio": "obrigatório",
+  "cepInvalido": "apenas números",
+  "pedidosErro": "Não foi possível carregar os pedidos"
+}
